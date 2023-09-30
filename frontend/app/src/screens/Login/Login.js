@@ -2,12 +2,18 @@ import React from 'react';
 import { useState } from 'react';
 import Header from '../../components/Header/Header';
 import axios from 'axios';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import './style.css';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState(false);
+    const navigate = useNavigate();
+
+    const navigateToUserDetails = () => {
+        navigate('/userDetails');
+      };
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -20,6 +26,7 @@ function Login() {
             if (response.status === 200) {
                 console.log('Login bem-sucedido!');
                 setLoginError(false)
+                navigateToUserDetails()
             } else {
                 console.log('Falha ao fazer login.');
             }
