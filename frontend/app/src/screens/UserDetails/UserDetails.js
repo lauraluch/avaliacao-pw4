@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import './style.css';
 import Header from "../../components/Header/Header";
+import { useUser } from '../../App';
 
 function UserDetails(props) {
-    const { username, pokemonList } = props;
+    // const { username, pokemonList } = props;
     const [pokemonName, setPokemonName] = useState('');
+    const { userData } = useUser();
+    const { username, pokemonList } = userData;
 
     function handlePokemonAddition() {
         console.log(pokemonName)
@@ -30,10 +33,17 @@ function UserDetails(props) {
                 <div>
                     <h2>💜 Your pokemons: </h2>
                     <ul>
-                        { pokemonList.length == 0 ? <p>Nothing here...</p> 
+                        {/* { pokemonList.length == 0 ? <p>Nothing here...</p> 
                             : pokemonList.map((item, index) => (
                                 <li key={index}>{item}</li>
                             ))
+                        } */}
+                        { pokemonList ? 
+                            pokemonList.map((item, index) => (
+                                <li key={index}>{item}</li>
+                            ))
+                            : 
+                            <p>Nothing here...</p>
                         }
                     </ul>
                 </div>

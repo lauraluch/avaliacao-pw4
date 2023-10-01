@@ -4,11 +4,14 @@ import Header from '../../components/Header/Header';
 import axios from 'axios';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import './style.css';
+import { useUser } from '../../App';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState(false);
+    const { setUserData } = useUser();
+    
     const navigate = useNavigate();
 
     const navigateToUserDetails = () => {
@@ -25,6 +28,7 @@ function Login() {
 
             if (response.status === 200) {
                 console.log('Login bem-sucedido!');
+                setUserData({ username, pokemonList: response.data.pokemonList });
                 setLoginError(false)
                 navigateToUserDetails()
             } else {

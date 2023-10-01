@@ -1,22 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useState, useContext } from "react";
 import Login from './screens/Login/Login';
 import UserDetails from './screens/UserDetails/UserDetails';
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+
+const UserContext = createContext();
+
+export function UserProvider({ children }) {
+    const [userData, setUserData] = useState({
+        username: "",
+        pokemonList: []
+    });
+
+    return (
+        <UserContext.Provider value={{ userData, setUserData }}>
+            {children}
+        </UserContext.Provider>
+    );
+}
+
+export function useUser() {
+  return useContext(UserContext);
+}
 
 function App() {
-  function NavigateToLoginPage() {
-    const navigate = useNavigate();
-    navigate('/loginPage');
-    return null;
-  }
-
-  return (
-   <Routes>
-      <Route path="/userDetails" element={<UserDetails username={"Laura"} pokemonList={[]}/>} />
-      <Route path="/" element={<Login />} />
-    </Routes>
-  );
+    return (
+        <UserProvider>
+            <Routes>
+                <Route path="/userDetails" element={<UserDetails />} />
+                <Route path="/" element={<Login />} />
+            </Routes>
+        </UserProvider>
+    );
 }
 
 export default App;
