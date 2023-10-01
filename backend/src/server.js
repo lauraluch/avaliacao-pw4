@@ -16,17 +16,19 @@ const users =  [
 ]
 
 function authenticateUser(username, password) {
-    return users.find(user => user.username === username && user.password === password);
+    const user = users.find(user => user.username === username && user.password === password);
+    return user
 }
 
-async function addPokemon(username, pokemonName) {
+function addPokemon(username, pokemonName) {
     try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-        const pokemonData = response.data;
+        // const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+        // const pokemonData = response.data;
+        // console.log(pokemonData)
         const user = users.find(user => user.username === username);
         
         if (user) {
-            user.pokemonList.push(pokemonData);
+            user.pokemonList.push(pokemonName);
             return true;
         }
         return false;
@@ -40,8 +42,16 @@ app.post('/login', (req, res) => {
     const {username, password} = req.body;
     const authenticatedUser = authenticateUser(username, password);
 
+    // if (authenticatedUser) {
+    //     res.status(200).send('Login successful!');
+    // } else {
+    //     res.status(401).send('Authentication failed');
+    // }
     if (authenticatedUser) {
-        res.status(200).send('Login successful!');
+        res.status(200).json({
+            username: authenticatedUser.username,
+            pokemonList: authenticatedUser.pokemonList
+        });
     } else {
         res.status(401).send('Authentication failed');
     }
@@ -49,7 +59,7 @@ app.post('/login', (req, res) => {
 
 app.post('/addPokemon', async (req, res) => {
     const {username, pokemonName} = req.body;
-    const success = await addPokemon(username, pokemonName);
+    const success = addPokemon(username, pokemonName);
 
     if (success) {
         res.status(200).send('Pokemon added successfully!');
@@ -57,6 +67,12 @@ app.post('/addPokemon', async (req, res) => {
         res.status(400).send('Failed to add Pokemon.');
     }
 });
+
+app.get('/users', (req, res) => {
+    res.status(200).json(users);
+});
+
+
 
 app.get('/', (req, res) => {
     res.send("Pokemon server");

@@ -1,24 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './style.css';
 import Header from "../../components/Header/Header";
 import { useUser } from '../../App';
+import axios from 'axios';
+import PokemonCard from '../../components/PokemonCard/PokemonCard';
 
 function UserDetails(props) {
-    // const { username, pokemonList } = props;
     const [pokemonName, setPokemonName] = useState('');
-    const { userData } = useUser();
+    const { userData, setUserData } = useUser();
     const { username, pokemonList } = userData;
+    const [localPokemonList, setLocalPokemonList] = useState(pokemonList);
 
-    function handlePokemonAddition() {
-        console.log(pokemonName)
-    }
+    useEffect(() => {
+        console.log(username);
+        console.log(localPokemonList);
+    }, [localPokemonList, username]);
 
-    function displayPokemons() {
-        if (pokemonList.length = 0) {
-            return (<h2>Nothing here...</h2>)
-        }
-        else {
-            return 
+    async function handlePokemonAddition(e) {
+        e.preventDefault();
+        console.log(username)
+        console.log(pokemonList)
+
+        try {
+            const pokemonExists = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+    
+            if (pokemonExists.status === 200) {
+                const response = await axios.post('http://localhost:3005/addPokemon', {
+                    username,
+                    pokemonName
+                });
+    
+                if (response.status === 200) {
+                    console.log('Pokemon adicionado!');
+                    const updatedPokemonList = [...localPokemonList, pokemonName];
+                    setLocalPokemonList(updatedPokemonList);
+                    setUserData({ username, pokemonList: updatedPokemonList });
+                } else {
+                    console.log('Falha ao adicionar pokemon.');
+                }
+            } else {
+                console.log('Pokemon não encontrado.');
+            }
+        } catch (error) {
+            console.error('Erro ao adicionar pokemon: ', error);
         }
     }
 
@@ -33,18 +57,11 @@ function UserDetails(props) {
                 <div>
                     <h2>💜 Your pokemons: </h2>
                     <ul>
-                        {/* { pokemonList.length == 0 ? <p>Nothing here...</p> 
-                            : pokemonList.map((item, index) => (
-                                <li key={index}>{item}</li>
-                            ))
-                        } */}
-                        { pokemonList ? 
-                            pokemonList.map((item, index) => (
-                                <li key={index}>{item}</li>
-                            ))
-                            : 
-                            <p>Nothing here...</p>
-                        }
+                        {pokemonList.map((pokemonName, index) => (
+                            <li key={index}>
+                                <PokemonCard pokemonName={pokemonName} />
+                            </li>
+                        ))}
                     </ul>
                 </div>
                 <div>
