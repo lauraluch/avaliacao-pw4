@@ -63,7 +63,7 @@ function Login() {
                 { loginError ?
                     <div className='error-message-display'>
                         <h1 className='error-title'>Oops...</h1>
-                        <p className='error-desc'>This user doesn't exist.</p>
+                        <p className='error-desc'>Incorrect username or password, please try again.</p>
                     </div>
                     : <div></div>
                 }

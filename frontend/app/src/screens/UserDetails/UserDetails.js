@@ -56,7 +56,7 @@ function UserDetails(props) {
                 </div>
                 <div>
                     <h2>💜 Your pokemons: </h2>
-                    <ul>
+                    <ul className="pokemon-list">
                         {pokemonList.map((pokemonName, index) => (
                             <li key={index}>
                                 <PokemonCard pokemonName={pokemonName} />

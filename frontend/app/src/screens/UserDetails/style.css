@@ -32,4 +32,12 @@
     color: white;
     font-weight: 700;
     background-color: rgb(179, 86, 207);
+    margin-bottom: 32px;
+}
+
+.pokemon-list {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    column-gap: 12px;
 }

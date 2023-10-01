@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './style.css';
 
 function PokemonCard({ pokemonName }) {
     const [pokemonData, setPokemonData] = useState(null);
@@ -29,7 +30,7 @@ function PokemonCard({ pokemonName }) {
         <div className="pokemon-card">
             <img src={imageUrl} alt={name} />
             <h3>{name}</h3>
-            <p>Type: {pokemonTypes}</p>
+            <p className='types'>type: {pokemonTypes}</p>
         </div>
     );
 }
