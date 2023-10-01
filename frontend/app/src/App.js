@@ -13,9 +13,7 @@ function App() {
 
   return (
    <Routes>
-      {/* <Route path="/loginPage" element={<Login />} /> */}
-      <Route path="/userDetails" element={<UserDetails />} />    
-      {/* <Route path="*" element={<NavigateToLoginPage />} /> */}
+      <Route path="/userDetails" element={<UserDetails username={"Laura"} pokemonList={[]}/>} />
       <Route path="/" element={<Login />} />
     </Routes>
   );

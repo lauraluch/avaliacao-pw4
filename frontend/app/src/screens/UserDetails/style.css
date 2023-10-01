@@ -1,0 +1,35 @@
+.details-body {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding-left: 5%;
+}
+
+.title-row {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    align-items: center;
+    width: 100%;
+    column-gap: 12px;
+    background-color: rgb(255, 255, 255);
+}
+
+.title-desc {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.title-name {
+    font-size: 28px;
+}
+
+.add-button {
+    width: 120px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 700;
+    background-color: rgb(179, 86, 207);
+}
