@@ -41,3 +41,20 @@
     list-style: none;
     column-gap: 12px;
 }
+
+.error-title {
+    color: rgb(255, 48, 48);
+    font-size: 22px;
+}
+
+.error-desc {
+    font-weight: 500;
+}
+
+.pokemon-error-message-display {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(255, 255, 255);
+}

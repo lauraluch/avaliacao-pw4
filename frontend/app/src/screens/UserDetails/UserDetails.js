@@ -10,6 +10,7 @@ function UserDetails(props) {
     const { userData, setUserData } = useUser();
     const { username, pokemonList } = userData;
     const [localPokemonList, setLocalPokemonList] = useState(pokemonList);
+    const [pokemonError, setPokemonError] = useState(false)
 
     useEffect(() => {
         console.log(username);
@@ -32,6 +33,7 @@ function UserDetails(props) {
     
                 if (response.status === 200) {
                     console.log('Pokemon adicionado!');
+                    setPokemonError(false)
                     const updatedPokemonList = [...localPokemonList, pokemonName];
                     setLocalPokemonList(updatedPokemonList);
                     setUserData({ username, pokemonList: updatedPokemonList });
@@ -40,9 +42,11 @@ function UserDetails(props) {
                 }
             } else {
                 console.log('Pokemon não encontrado.');
+                setPokemonError(true)
             }
         } catch (error) {
             console.error('Erro ao adicionar pokemon: ', error);
+            setPokemonError(true)
         }
     }
 
@@ -74,6 +78,13 @@ function UserDetails(props) {
                         </div>
                     </form>
                 </div>
+                { pokemonError ?
+                    <div className='pokemon-error-message-display'>
+                        <h1 className='error-title'>Oops...</h1>
+                        <p className='error-desc'>That pokemon does not exist.</p>
+                    </div>
+                    : <div></div>
+                }
             </div>
         </div>
     )
